@@ -11,28 +11,21 @@ namespace CaesarCypher.Cmdline;
 
 public class CaesarCypherBenchmark
 {
-    private const int Shift = 10;
     private string data;
 
-    [Params(10, 100, 1000)]
+    //[Params(10, 100, 1000)]
+    [Params(100)]
     public int N { get; set; }
+
+    //[Params(2, 25, 100)]
+    [Params(1, 25)]
+    public int Shift { get; set; }
 
     [GlobalSetup]
     public void Setup()
     {
-
-        char[] randomString = new char[N];
-        var random = new Random();
-
-        // Generate random characters and populate the array
-        for (int i = 0; i < N; i++)
-        {
-            // Generate a random ASCII character (32 to 126 are printable ASCII characters)
-            randomString[i] = (char)random.Next(32, 127);
-        }
-
-        // Convert the character array to a string
-        data = new string(randomString);
+        //generates ok reasonable looking text from a snippet from chatgpt
+        data = Text.GetRandomishButRealisticText(N);
     }
 
     [Benchmark(Baseline = true)]

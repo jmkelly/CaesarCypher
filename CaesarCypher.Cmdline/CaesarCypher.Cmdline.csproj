@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Benchmarkdotnet" Version="0.13.11" />
+    <PackageReference Include="Markov" Version="2.0.0" />
   </ItemGroup>
 
   <PropertyGroup>

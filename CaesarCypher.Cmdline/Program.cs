@@ -13,12 +13,12 @@ public class CaesarCypherBenchmark
 {
     private string data;
 
-    //[Params(10, 100, 1000)]
-    [Params(100)]
+    [Params(10, 100, 1000)]
+    //[Params(100)]
     public int N { get; set; }
 
-    //[Params(2, 25, 100)]
-    [Params(1, 25)]
+    [Params(2, 25, 100)]
+    //[Params(1, 25)]
     public int Shift { get; set; }
 
     [GlobalSetup]
@@ -36,6 +36,8 @@ public class CaesarCypherBenchmark
     public string DandysCaesarSalad() => DandyCaesarSalad.Encrypt(data, Shift);
     [Benchmark]
     public string DandysCaesarSalad8() => DandyCaesarSalad8.Encrypt(data, Shift);
+    [Benchmark]
+    public string BriansVector() => BrianVector.Encrypt(data, Shift);
 
 }
 

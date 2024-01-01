@@ -18,3 +18,6 @@ Eg.
         //go nuts with your implementation!
     }
 }`
+
+
+To run the benchmarks, goto the CaesarCypher.Cmdline directory and in your cmdline run `dotnet run -c Release`

@@ -26,3 +26,5 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Benchmark
+      run: dotnet run --project CaesarCypher.Cmdline/CaesarCypher.Cmdline.csproj -c Release

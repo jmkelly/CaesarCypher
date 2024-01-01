@@ -1,8 +1,9 @@
 # CaesarCypher
 
-The most comprehensive implementations of the Caesar Cypher written in C# IT THE WORLD!!!!
 
-I (@jmkelly) got nerdniped because ChatGpt wrote a quicker implementation than I did initially.  I have subsequently nerdsniped @xt0rted and @aarondandy who provided most of the implementations (including all the fast ones)
+> The most comprehensive implementations of the Caesar Cypher written in C# IT THE WORLD!!!!
+
+I got nerdniped because ChatGpt wrote a quicker implementation than I did initially.  I have subsequently nerdsniped [@xt0rted](https://github.com/xt0rted) and [@aarondandy](https://github.com/aarondandy) who provided most of the implementations (including all the fast ones)
 
 Various different techniques including arrays of char, unsafe string manipulation, math shortcuts, spans, vectors and more....
 
@@ -12,12 +13,15 @@ To automatically test, drop a sealed class (for performance reasons) into the Co
 
 Eg.
 
-`public sealed class AnotherEncrypter {
-    public static string Encrypt(string text, int shift)
+`   
+    public sealed class AnotherEncrypter 
     {
-        //go nuts with your implementation!
+        public static string Encrypt(string text, int shift)
+        {
+            //go nuts with your implementation!
+        }
     }
-}`
+`
 
 
 To run the benchmarks, goto the CaesarCypher.Cmdline directory and in your cmdline run `dotnet run -c Release`

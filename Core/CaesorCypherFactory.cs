@@ -19,8 +19,7 @@ public class CaesorCypherFactory
         var assembly = Assembly.GetExecutingAssembly();
         output.WriteLine($"assembly name {assembly.GetName()}");
         var cyphers = assembly.GetTypes()
-                .Where(t => String.Equals(t.Namespace, ns, StringComparison.Ordinal) && t.IsSealed && t.IsClass)
-                //.Where(t => String.Equals(t.Namespace, ns, StringComparison.Ordinal))
+                .Where(t => String.Equals(t.Namespace, ns, StringComparison.Ordinal) && t.IsSealed && t.IsClass && t.GetMethod("Encrypt") != null)
                 .ToArray();
 
         return cyphers;

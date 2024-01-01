@@ -2,18 +2,18 @@ namespace CaesarCypher.Cyphers;
 
 public sealed class KelsoUnsafe
 {
-    public static string Encrypt(string input, int shift)
+    public static string Encrypt(string text, int shift)
     {
-        if (string.IsNullOrEmpty(input))
+        if (string.IsNullOrEmpty(text))
         {
-            return input;
+            return text;
         }
-        string result = string.Create(input.Length, (input), (span, args) =>
+        string result = string.Create(text.Length, (text), (span, args) =>
         {
             for (var i = 0; i < span.Length; i++)
             {
 
-                char ch = input[i];
+                char ch = text[i];
                 span[i] = ch;
             }
         });

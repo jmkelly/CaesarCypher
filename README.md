@@ -1,7 +1,7 @@
 # CaesarCypher
 
 
-> The most comprehensive implementations of the Caesar Cypher written in C# IT THE WORLD!!!!
+> The most comprehensive list of implementations of the Caesar Cypher written in C# IN THE WORLD!!!!
 
 I got nerdniped because ChatGpt wrote a quicker implementation than I did initially.  I have subsequently nerdsniped [@xt0rted](https://github.com/xt0rted) and [@aarondandy](https://github.com/aarondandy) who provided most of the implementations (including all the fast ones)
 

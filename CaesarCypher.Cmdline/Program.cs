@@ -14,7 +14,7 @@ public class CaesarCypherBenchmark
     private const int Shift = 10;
     private string data;
 
-    [Params(100)]
+    [Params(10, 100, 1000)]
     public int N { get; set; }
 
     [GlobalSetup]
@@ -35,37 +35,8 @@ public class CaesarCypherBenchmark
         data = new string(randomString);
     }
 
-    // [Benchmark]//mine is slow
-    // public string MyArrayOfChar() => CaesarCypher.EncryptWithCharArray(data, Shift);
-    // //
-    // [Benchmark]
-    // public string MyStringBuilder() => CaesarCypher.EncryptWithStringBuilder(data, Shift);
-    //
-    // [Benchmark]
-    // public string MyUnsafe() => CaesarCypher.EncryptWithUnsafe(data, Shift);
-    //
-    // [Benchmark]
-    // public string Gpt() => CaesarCypher.EncryptGtp(data, Shift);
-    //
-    // [Benchmark]
-    // public string OriginalDandy() => CaesarCypher.EncryptDandyOriginal(data, Shift);
-    //
-    // [Benchmark]
-    // public string DandyRevised() => CaesarCypher.EncryptDandyRevised(data, Shift);
-    //
-    // [Benchmark]
-    // public string Brian() => CaesarCypher.EncryptBrian(data, Shift);
-    //
-    // [Benchmark]
-    // public string BrianVector() => CaesarCypher.EncyptBrianVector(data, Shift);
-    //
-    // [Benchmark]
-    // public string DandyDeconstructedTuple() => CaesarCypher.EncryptDandyDeconstructTuple(data, Shift);
-    //
-    // [Benchmark]
-    // public string DandyGoingToBed() => CaesarCypher.EncryptDandyIsGoingToBed(data, Shift);
-    //
-    //
+    [Benchmark(Baseline = true)]
+    public string Gpt() => ChatGpt.Encrypt(data, Shift);
     [Benchmark]
     public string DandysGoto() => DandyGoto.Encrypt(data, Shift);
     [Benchmark]

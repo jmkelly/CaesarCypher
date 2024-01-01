@@ -16,8 +16,6 @@ public class MarkovTextTest
     {
         var text = Text.GetRandomishButRealisticText(100);
         output.WriteLine(text);
-        text.Length.ShouldBe(0);
-
+        text.Length.ShouldBe(100);
     }
-
 }

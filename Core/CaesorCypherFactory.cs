@@ -3,6 +3,7 @@ using Xunit.Abstractions;
 
 namespace CaesarCypher;
 
+//Note: I know this is terrible....but it does appear to work as long as you have a sealed class with a static Encrypt method that takes a string and an int :)
 public class CaesorCypherFactory
 {
     public CaesorCypherFactory(ITestOutputHelper output)

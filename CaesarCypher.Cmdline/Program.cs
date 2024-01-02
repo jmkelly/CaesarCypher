@@ -38,6 +38,8 @@ public class CaesarCypherBenchmark
     public string DandysCaesarSalad8() => DandyCaesarSalad8.Encrypt(data, Shift);
     [Benchmark]
     public string BriansVector() => BrianVector.Encrypt(data, Shift);
+    [Benchmark]
+    public string DandysVector() => DandyVector.Encrypt(data, Shift);
 }
 
 public class Program

@@ -1,3 +1,7 @@
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
+
 public sealed class VectorDandy
 {
     public static string Encrypt(string input, int shift)

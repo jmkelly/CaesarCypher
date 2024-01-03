@@ -14,7 +14,7 @@ public class CaesarCypherBenchmark
     private string data;
 
     [Params(10, 100, 1000)]
-    //[Params(100)]
+    //[Params(10)]
     public int N { get; set; }
 
     [Params(2, 25, 100)]
@@ -40,6 +40,8 @@ public class CaesarCypherBenchmark
     public string BriansVector() => BrianVector.Encrypt(data, Shift);
     [Benchmark]
     public string DandysVector() => DandyVector.Encrypt(data, Shift);
+    [Benchmark]
+    public string BriansScalarShift() => BrianScalarShift.Encrypt(data, Shift);
 }
 
 public class Program

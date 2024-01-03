@@ -18,7 +18,7 @@ public class CaesarCypherTests
     [InlineData("xyz", 1, "yza", "xyz")]
     [InlineData("xyz1", 1, "yza1", "xyz1")]
     [InlineData("x3yz1", 1, "y3za1", "x3yz1")]
-    public void CaesorCypher2_WhenGivenText_ShouldShiftCorrectly(string text, int shift, string result, string ori)
+    public void CaesorCypher_WhenGivenText_ShouldShiftCorrectly(string text, int shift, string result, string ori)
     {
         //create the encrypter via the factory
         var factory = new CaesorCypherFactory(output);

@@ -34,60 +34,6 @@ public sealed class DandyVector
             }
         );
 
-        static int applyShiftVector256(Span<char> output, ReadOnlySpan<char> input, int i, ushort shiftBy)
-        {
-            var A = Vector256.Create((ushort)'A'); // 65
-            var Z = Vector256.Create((ushort)'Z'); // 90
-            var a = Vector256.Create((ushort)'a'); // 97
-            var z = Vector256.Create((ushort)'z'); // 122
-
-            var offset = Vector256.Create((ushort)26);
-
-            var vecShift = Vector256.Create(shiftBy);
-
-            ref readonly ushort inputRef = ref Unsafe.As<char, ushort>(ref MemoryMarshal.GetReference(input));
-            ref ushort outputRef = ref Unsafe.As<char, ushort>(ref MemoryMarshal.GetReference(output));
-
-            do
-            {
-                var vec = Vector256.LoadUnsafe(in inputRef, (nuint)i);
-
-                var inUpperRange = Vector256.BitwiseAnd(
-                    Vector256.GreaterThanOrEqual(vec, A),
-                    Vector256.LessThanOrEqual(vec, Z));
-                var inLowerRange = Vector256.BitwiseAnd(
-                    Vector256.GreaterThanOrEqual(vec, a),
-                    Vector256.LessThanOrEqual(vec, z));
-                var inRange = Vector256.BitwiseOr(
-                    inUpperRange,
-                    inLowerRange);
-
-                var incremented = Vector256.ConditionalSelect(
-                    inRange,
-                    Vector256.Add(vec, vecShift),
-                    vec);
-
-                var overflowUpper = Vector256.BitwiseAnd(
-                    inUpperRange,
-                    Vector256.GreaterThan(incremented, Z));
-                var overflowLower = Vector256.GreaterThan(incremented, z);
-                var overflow = Vector256.BitwiseOr(
-                    overflowUpper,
-                    overflowLower);
-
-                var wrapped = Vector256.Subtract(
-                    incremented,
-                    Vector256.BitwiseAnd(overflow, offset));
-
-                wrapped.StoreUnsafe(ref outputRef, (nuint)i);
-
-                i += Vector256<ushort>.Count;
-            }
-            while (output.Length - i >= Vector256<ushort>.Count);
-
-            return i;
-        }
-
         static int applyShiftVector128(Span<char> output, ReadOnlySpan<char> input, int i, ushort shiftBy)
         {
             var A = Vector128.Create((ushort)'A'); // 65
@@ -193,6 +139,52 @@ public sealed class DandyVector
                 i += Vector64<ushort>.Count;
             }
             while (output.Length - i >= Vector64<ushort>.Count);
+
+            return i;
+        }
+
+
+        static int applyShiftVector256(Span<char> output, ReadOnlySpan<char> input, int i, ushort shiftBy)
+        {
+            var A = Vector256.Create((ushort)'A'); // 65
+            var Z = Vector256.Create((ushort)'Z'); // 90
+            var a = Vector256.Create((ushort)'a'); // 97
+            var z = Vector256.Create((ushort)'z'); // 122
+            var vecWrap = Vector256.Create((ushort)26);
+            var vecShift = Vector256.Create(shiftBy);
+
+            ref readonly ushort inputRef = ref Unsafe.As<char, ushort>(ref MemoryMarshal.GetReference(input));
+            ref ushort outputRef = ref Unsafe.As<char, ushort>(ref MemoryMarshal.GetReference(output));
+
+            do
+            {
+                var vec = Vector256.LoadUnsafe(in inputRef, (nuint)i);
+
+                // Find values matching letter ranges
+                var inUpperRange = Vector256.BitwiseAnd(
+                    Vector256.GreaterThanOrEqual(vec, A),
+                    Vector256.LessThanOrEqual(vec, Z));
+                var inLowerRange = Vector256.BitwiseAnd(
+                    Vector256.GreaterThanOrEqual(vec, a),
+                    Vector256.LessThanOrEqual(vec, z));
+
+                // Apply shift
+                vec = Vector256.Add(Vector256.BitwiseAnd(Vector256.BitwiseOr(inUpperRange, inLowerRange), vecShift), vec);
+
+                // Apply wraparound for overflow
+                vec = Vector256.Subtract(
+                    vec,
+                    Vector256.BitwiseAnd(
+                        Vector256.BitwiseOr(
+                            Vector256.BitwiseAnd(inUpperRange, Vector256.GreaterThan(vec, Z)),
+                            Vector256.BitwiseAnd(inLowerRange, Vector256.GreaterThan(vec, z))),
+                        vecWrap));
+
+                vec.StoreUnsafe(ref outputRef, (nuint)i);
+
+                i += Vector256<ushort>.Count;
+            }
+            while (output.Length - i >= Vector256<ushort>.Count);
 
             return i;
         }

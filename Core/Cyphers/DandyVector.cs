@@ -70,7 +70,9 @@ public sealed class DandyVector
                 var overflowUpper = Vector128.BitwiseAnd(
                     inUpperRange,
                     Vector128.GreaterThan(incremented, Z));
-                var overflowLower = Vector128.GreaterThan(incremented, z);
+                var overflowLower = Vector128.BitwiseAnd(
+                    inLowerRange,
+                    Vector128.GreaterThan(incremented, z));
                 var overflow = Vector128.BitwiseOr(
                     overflowUpper,
                     overflowLower);
@@ -125,7 +127,9 @@ public sealed class DandyVector
                 var overflowUpper = Vector64.BitwiseAnd(
                     inUpperRange,
                     Vector64.GreaterThan(incremented, Z));
-                var overflowLower = Vector64.GreaterThan(incremented, z);
+                var overflowLower = Vector64.BitwiseAnd(
+                    inLowerRange,
+                    Vector64.GreaterThan(incremented, z));
                 var overflow = Vector64.BitwiseOr(
                     overflowUpper,
                     overflowLower);
